@@ -1,5 +1,7 @@
 # ghe-api
 
+Displays the contributors who have been active in the last 300 events in your GHE repository.
+
 ## usage
 
 1. edit to `pkg/env/.env.yaml`
