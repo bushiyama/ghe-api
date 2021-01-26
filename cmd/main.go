@@ -30,11 +30,20 @@ func (a byEvents) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
 func (a byEvents) Less(i, j int) bool { return a[i].Events > a[j].Events }
 
 var (
-	envVars *env.Variables
+	envVars    *env.Variables
+	flagFilter string
 )
 
 func main() {
 	app := &cli.App{
+		Flags: []cli.Flag{
+			&cli.StringFlag{
+				Name:        "f",
+				Usage:       "event type filter.",
+				Destination: &flagFilter,
+				Required:    false,
+			},
+		},
 		Action: func(c *cli.Context) error {
 			// load vars
 			var err error
@@ -56,10 +65,14 @@ func main() {
 
 			// countのためmapへ
 			analyzeMap := map[string]int{}
+			totalCnt := 0
 			for v := range resChan {
 				for _, v := range v {
-					n := v["actor"].(map[string]interface{})["login"].(string)
-					analyzeMap[n] = analyzeMap[n] + 1
+					if flagFilter == "" || flagFilter == v["type"].(string) {
+						n := v["actor"].(map[string]interface{})["login"].(string)
+						analyzeMap[n] = analyzeMap[n] + 1
+						totalCnt++
+					}
 				}
 			}
 			// sorting
@@ -78,6 +91,7 @@ func main() {
 					fmt.Println(v)
 				}
 			}
+			fmt.Println("__Total Count: " + strconv.Itoa(totalCnt))
 
 			return nil
 		},
