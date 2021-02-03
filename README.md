@@ -20,5 +20,3 @@ Displays the contributors who have been active in the last 300 events in your GH
 
 [official](https://docs.github.com/en/github-ae@latest/rest/reference/activity), the maximum number is 300, but in reality, it seems to be less than that.
 > Events support pagination, however the per_page option is unsupported. The fixed page size is 30 items. Fetching up to ten pages is supported, for a total of 300 events. For information, see "Traversing with pagination."
-
--> In fact, up to 267.
