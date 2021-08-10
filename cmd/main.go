@@ -85,13 +85,13 @@ func main() {
 			sort.Sort(byEvents(objSlices))
 
 			// print top 3
-			fmt.Println(envVars.Domain + "/" + envVars.User + "/" + envVars.Repo + " Autor of Latest300events TOP3!")
+			totals := strconv.Itoa(totalCnt)
+			fmt.Println(envVars.Domain + "/" + envVars.User + "/" + envVars.Repo + " Autor of Latest "+ totals +" events TOP3!")
 			for i, v := range objSlices {
 				if i < 3 {
 					fmt.Println(v)
 				}
 			}
-			fmt.Println("__Total Count: " + strconv.Itoa(totalCnt))
 
 			return nil
 		},
